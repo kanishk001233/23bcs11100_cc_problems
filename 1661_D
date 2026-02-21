@@ -1,0 +1,49 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    long long n, k;
+    cin >> n >> k;
+
+    long long b[300005];
+
+    for(long long a = 0; a < n; a++)
+    {
+        cin >> b[a];
+    }
+
+    long long abc[300010] = {0};
+
+    long long a = 0;
+    long long c = 0;
+    long long d = 0;
+
+    for(long long i = 0; i < n; i++)
+    {
+        c = c + abc[i];
+        d = d + c;
+
+        long long e = d;
+
+        if(e < b[i])
+        {
+            long long f = b[i] - e;
+            long long g = (f + k - 1) / k;
+
+            a = a + g;
+
+            c = c + g;
+            d = d + g;
+
+            if(i + k < n)
+            {
+                abc[i + k] = abc[i + k] - g;
+            }
+        }
+    }
+
+    cout << a;
+
+    return 0;
+}
