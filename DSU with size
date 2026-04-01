@@ -1,0 +1,51 @@
+//disjoint set union with size
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> parent, sz;
+
+int find(int x) {
+    if (parent[x] == x)
+        return x;
+    return parent[x] = find(parent[x]);
+}
+
+void unite(int a, int b) {
+    a = find(a);
+    b = find(b);
+    if (a != b) {
+        if (sz[a] < sz[b])
+            swap(a, b);
+        parent[b] = a;
+        sz[a] += sz[b];
+    }
+}
+
+int main() {
+    int n, m;
+    cin >> n;
+    cin >> m;
+
+    parent.resize(n + 1);
+    sz.resize(n + 1, 1);
+
+    for (int i = 1; i <= n; i++)
+        parent[i] = i;
+
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+        unite(u, v);
+    }
+
+    for (int i = 1; i <= n; i++)
+        cout << "Parent of " << i << " = " << find(i) << endl;
+
+    set<int> components;
+    for (int i = 1; i <= n; i++)
+        components.insert(find(i));
+
+    cout << "Number of components: " << components.size();
+
+    return 0;
+}
